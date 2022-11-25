@@ -51,7 +51,7 @@ def b(t):
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
-# o lambda varia de acordo com os rho
+# o lambda = rho nesse caso ( taxa de serviço (mu) = 1  )  
 
 rhos = [0.2, 0.4, 0.6, 0.8, 0.9]
 
@@ -68,33 +68,13 @@ descritas acima.
 X1_MEAN = 1         # Avg. processing time in minutes of queu 1
 X2_MEAN = 1         # Avg. processing time in minutes of queu 2
 
-W1_MEANs = []       # Avg. interarrival time in minutes of queu 1
-for rho in rhos : 
-    W1_MEANs.append(
-                    (rho/2 + X1_MEAN)/(1-rho/2) 
-                    )
+W1_MEANs = [(rhos[i]/2 + X1_MEAN)/(1-rhos[i]/2) for i in range(len(rhos))]       # Avg. interarrival time in minutes of queu 1
 
-T1_MEANs = []       # Avg. time in queu 1
-for W1_MEAN in W1_MEANs : 
-    T1_MEANs.append(
-                    X1_MEAN + W1_MEAN
-                    )
+T1_MEANs = [X1_MEAN + W1_MEANs[i] for i in range(len(W1_MEANs))]       # Avg. time in queu 1
 
-W2_MEANs = []       # Avg. interarrival time in minutes of queu 2
-for i in range(len(rhos)) : 
-    for j in range(len(T1_MEANs)) :
-        for k in range(len(W1_MEANs)) :
-            if i == j == k: 
-                W2_MEANs.append(
-                                (W1_MEANs[k] + (rhos[i]/2) * T1_MEANs[j])/(1-rhos[i]) 
-                                )
+W2_MEANs = [(W1_MEANs[i] + (rhos[i]/2) * T1_MEANs[i])/(1-rhos[i]) for i in range(len(rhos))]       # Avg. interarrival time in minutes of queu 2
 
-T2_MEANs = []       # Avg. time in queu 2
-for W2_MEAN in W2_MEANs : 
-    T2_MEANs.append(
-                    X2_MEAN + W2_MEAN
-                    )
-
+T2_MEANs = [X2_MEAN + W2_MEANs[i] for i in range(len(W2_MEANs))]       # Avg. time in queu 2
 
 N1 = [T1_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
 
