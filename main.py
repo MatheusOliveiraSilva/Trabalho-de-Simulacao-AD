@@ -83,10 +83,11 @@ for W1_MEAN in W1_MEANs :
 W2_MEANs = []       # Avg. interarrival time in minutes of queu 2
 for i in range(len(rhos)) : 
     for j in range(len(T1_MEANs)) :
-        if i == j : 
-            W2_MEANs.append(
-                            (rhos[i] * T1_MEANs[j])/(1-rhos[i]/2) 
-                            )
+        for k in range(len(W1_MEANs)) :
+            if i == j == k: 
+                W2_MEANs.append(
+                                (W1_MEANs[k] + (rhos[i]/2) * T1_MEANs[j])/(1-rhos[i]) 
+                                )
 
 T2_MEANs = []       # Avg. time in queu 2
 for W2_MEAN in W2_MEANs : 
@@ -94,23 +95,24 @@ for W2_MEAN in W2_MEANs :
                     X2_MEAN + W2_MEAN
                     )
 
-"""
-print("Nosso tempos de serviço na fila 1 e 2 são iguais valem 1 segundo. \n")
 
-for i in range(len(rhos)):
-    print("\nO nosso tempo de espera na fila 1 E[W1]: \n ")
-    print(W1_MEANs[i])
-    print("\nO nosso tempo total na fila 1 E[T1]: \n")
-    print(T1_MEANs[i])
-    print("\nO nosso tempo de espera na fila 2 E[W2]: \n")
-    print(W2_MEANs[i])
-    print("\nO nosso tempo total na fila 2 E[T2]: \n")
-    print(T2_MEANs[i])
-    print("\nNosso tempo total no sistema: \n", T1_MEANs[i] + T2_MEANs[i], "\n")
-    print("\nPara o valor de rho = ", rhos[i], "\n")
+N1 = [T1_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
 
-"""
+N2 = [T2_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
+
+Nq1 = [W1_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
+
+Nq2 = [W2_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 2
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
+# printando para ver os valores analíticos.
+for i in range(len(rhos)):
+    print("Para rho = ", rhos[i], " temos que o tempo que se passa no sistema da fila 1 é: ", T1_MEANs[i], " segundos e o tempo que se passa no sistema da fila 2 é: ", T2_MEANs[i], " segundos. \n")
+    print("E o tempo de espera na fila 1 é: ", W1_MEANs[i], " segundos e o tempo de espera na fila 2 é: ", W2_MEANs[i], " segundos. \n")
+    print("O número de clientes no sistema da fila 1 é: ", N1[i], " e o número de clientes no sistema da fila 2 é: ", N2[i], " . \n")
+    print("O número de clientes na fila de espera da fila 1 é: ", Nq1[i], " e o número de clientes na fila de espera da fila 2 é: ", Nq2[i], " . \n")
+    print("E o tempo passado no sistema inteiro é : ", T1_MEANs[i] + T2_MEANs[i], " segundos. \n")
+    
+# --------------------------------------------------------------------------------------------------------------------------------
 
