@@ -68,7 +68,7 @@ descritas acima.
 X1_MEAN = 1         # Avg. processing time in minutes of queu 1
 X2_MEAN = 1         # Avg. processing time in minutes of queu 2
 
-W1_MEANs = [(rhos[i]/2 + X1_MEAN)/(1-rhos[i]/2) for i in range(len(rhos))]       # Avg. interarrival time in minutes of queu 1
+W1_MEANs = [(rhos[i]/2 * X1_MEAN)/(1-rhos[i]/2) for i in range(len(rhos))]       # Avg. interarrival time in minutes of queu 1
 
 T1_MEANs = [X1_MEAN + W1_MEANs[i] for i in range(len(W1_MEANs))]       # Avg. time in queu 1
 
@@ -78,7 +78,7 @@ T2_MEANs = [X2_MEAN + W2_MEANs[i] for i in range(len(W2_MEANs))]       # Avg. ti
 
 N1 = [T1_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
 
-N2 = [T2_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
+N2 = [T2_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 2
 
 Nq1 = [W1_MEANs[i]*rhos[i] for i in range(len(rhos))] # número de clientes na fila de espera 1
 
