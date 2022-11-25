@@ -64,7 +64,7 @@ def fila2(env, name, servidor, tempo_de_chegada):
         print('%s começou o serviço da fila 2 no segundo %f' % (name, env.now))
         yield env.timeout(random.expovariate(1)) # serviço com duração aleatória mas exponencialmente distribuída com tempo médio X2 = mu = 1
         print('%s terminou o serviço da fila 2 no segundo %f' % (name, env.now))
-        
+
 
 # nosso servidor atende um cliente por vez, vou alocar ele no nosso ambiente "env"
 env = simpy.Environment()
